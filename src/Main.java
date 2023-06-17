@@ -2,12 +2,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * The Main class is the entry point of the program and handles user input for encryption/decryption and key choice.
+ */
 public class Main {
     public static void main(String[] args) {
         String filePath = "C:\\Users\\ckdkcdkccv\\Downloads\\Gedicht.txt";
         String encryptedFilePath = "C:\\Users\\ckdkcdkccv\\Downloads\\Encrypted.txt";
         String decryptedFilePath = "C:\\Users\\ckdkcdkccv\\Downloads\\Decrypted.txt";
-        int key = 0; // Default key value
+        int key; // Default key value
 
         // Read user input for encryption/decryption and key choice
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -26,7 +29,7 @@ public class Main {
                     System.out.println("Random key used for encryption: " + key);
                 } else {
                     System.out.println("Invalid key choice. Exiting the program.");
-                    System.exit(0);
+                    return;
                 }
 
                 Encrypt.encryptFile(filePath, encryptedFilePath, key);
@@ -52,15 +55,14 @@ public class Main {
                     }
                 } else {
                     System.out.println("Invalid key choice. Exiting the program.");
-                    System.exit(0);
+
                 }
             } else {
                 System.out.println("Invalid mode choice. Exiting the program.");
-                System.exit(0);
             }
         } catch (IOException e) {
             System.out.println("An error occurred while reading user input. Exiting the program.");
-            System.exit(0);
+            e.printStackTrace();
         }
     }
 }

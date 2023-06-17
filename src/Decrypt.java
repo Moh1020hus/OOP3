@@ -3,16 +3,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The Decrypt class provides methods for file decryption and key finding.
+ */
 public class Decrypt {
-    private int key;
 
-    public void setKey(int key){
-        this.key =  key;
-    }
+
+    /**
+     * Decrypts a file using the specified key and saves the decrypted content to a new file.
+     *
+     * @param encryptedFilePath  the path of the encrypted file
+     * @param decryptedFilePath  the path to save the decrypted file
+     * @param key                the decryption key to use
+     */
     public static void decryptFile(String encryptedFilePath, String decryptedFilePath, int key) {
-
         try (BufferedReader fileReader = new BufferedReader(new FileReader(encryptedFilePath));
-                BufferedWriter fileWriter = new BufferedWriter(new FileWriter(decryptedFilePath))) {
+             BufferedWriter fileWriter = new BufferedWriter(new FileWriter(decryptedFilePath))) {
             String line;
             while ((line = fileReader.readLine()) != null) {
                 StringBuilder decryptedText = new StringBuilder();
@@ -32,25 +38,20 @@ public class Decrypt {
                         decryptedText.append(ch);
                     }
                 }
-                fileWriter.write(String.valueOf(decryptedText));
+                fileWriter.write(decryptedText.toString());
                 fileWriter.newLine();
             }
         } catch (IOException e) {
             System.out.println("An error occurred while decrypting the file.");
             e.printStackTrace();
-            System.exit(0);
         }
     }
 
-    static int getMultiplicativeInverse(int a) {
-        a = a % 26;
-        for (int x = 1; x < 26; x++) {
-            if ((a * x) % 26 == 1) {
-                return x;
-            }
-        }
-        return 1;
-    }
+    /**
+     * Replaces German special characters in the decrypted file.
+     *
+     * @param decryptedFilePath the path of the decrypted file
+     */
     public static void replaceGermanSpecialCharacters(String decryptedFilePath) {
         try {
             File file = new File(decryptedFilePath);
@@ -74,7 +75,12 @@ public class Decrypt {
         }
     }
 
-
+    /**
+     * Finds the decryption key used in the encrypted file.
+     *
+     * @param encryptedFilePath the path of the encrypted file
+     * @return the decryption key if found, or -1 if the key was not found
+     */
     public static int findKey(String encryptedFilePath) {
         int[] letterFrequencies = countOccurrences(encryptedFilePath.toLowerCase());
 
@@ -129,5 +135,15 @@ public class Decrypt {
 
         System.out.println("Letter frequencies: " + Arrays.toString(letterFrequencies));
         return letterFrequencies;
+    }
+
+    private static int getMultiplicativeInverse(int a) {
+        a = a % 26;
+        for (int x = 1; x < 26; x++) {
+            if ((a * x) % 26 == 1) {
+                return x;
+            }
+        }
+        return 1;
     }
 }

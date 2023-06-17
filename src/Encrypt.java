@@ -1,8 +1,18 @@
 import java.io.*;
 
+/**
+ * The Encrypt class provides methods for file encryption using a specified key.
+ */
 public class Encrypt {
     private static final int[] VALID_KEYS = {3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25};
 
+    /**
+     * Encrypts a file using the specified key and saves the encrypted content to a new file.
+     *
+     * @param filePath          the path of the file to encrypt
+     * @param encryptedFilePath the path to save the encrypted file
+     * @param key               the encryption key to use
+     */
     public static void encryptFile(String filePath, String encryptedFilePath, int key) {
         try (BufferedReader fileReader = new BufferedReader(new FileReader(filePath));
              BufferedWriter fileWriter = new BufferedWriter(new FileWriter(encryptedFilePath))) {
@@ -34,13 +44,13 @@ public class Encrypt {
         }
     }
 
+    /**
+     * Generates a random encryption key from the valid keys.
+     *
+     * @return a random encryption key
+     */
     public static int getRandomKey() {
         int index = (int) (Math.random() * VALID_KEYS.length);
         return VALID_KEYS[index];
     }
-
-
-
-
-
 }
